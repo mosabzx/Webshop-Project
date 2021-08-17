@@ -1,0 +1,49 @@
+﻿@model WebShop.Models.Products
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details of '@Model.Name'</h1>
+
+<div>
+   <hr />
+    <dt class="col-sm-2">
+        @Html.DisplayFor(model => model.Name)
+    </dt>
+    <dd class="col-sm-3">
+        <img src="~/image/@Model.ImageName" class="w-100 d-block" asp-append-version="true" alt="Slide Image">
+    </dd>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @*<a asp-action="Index">Back to List</a>*@
+    <a class="btn btn-warning" asp-action="Index">Back To List</a>
+</div>

@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model RoleEdit
+
+<h1>'@Model.Role.Name' Details</h1>
+<hr />
+<div asp-validation-summary="All" class="text-danger"></div>
+
+@{
+    ViewBag.Title = "Role Details";
+}
+<form method="post">
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+
+    <h2 class="text-info">Users List Under '@Model.Role.Name'</h2>
+
+    @if (Model.Members.Count() == 0)
+    {
+        <p>No Users Are Assigned</p>
+    }
+    else
+    {
+        @foreach (ApplicationUser user in Model.Members)
+        {
+            <ul>@user.UserName</ul>
+        }
+    }
+</form>
+<br />
+@*<a asp-action="RolesList">Back To List</a>*@
+<div class="container">
+    <a class="btn btn-warning" asp-action="RolesList">Back To List</a>
+</div>

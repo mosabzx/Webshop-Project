@@ -1,0 +1,31 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@model ApplicationUser
+
+<h1>Update User</h1>
+<hr />
+@*<a asp-action="UsersList" class="btn btn-secondary">Back</a>*@
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="UpdateUser" method="post">
+    <div class="form-group">
+        <label class="col-md-2" asp-for="Id"></label>
+        <input class="col-md-4" asp-for="Id" class="form-control" disabled />
+    </div>
+    <div class="form-group">
+        <label class="col-md-2" asp-for="UserName"></label>
+        <input class="col-md-4" asp-for="UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="col-md-2" asp-for="Email"></label>
+        <input class="col-md-4" asp-for="Email" class="form-control" />
+    </div>
+    @*<div class="form-group">
+            <label for="password">Password</label>
+            <input name="password" class="form-control" />
+        </div>*@
+    <button type="submit" class="btn btn-primary">Save</button>|
+    <a class="btn btn-warning" asp-action="UsersList">Back To List</a>
+</form>
+
+@*<a asp-action="UsersList">Back To List</a>*@

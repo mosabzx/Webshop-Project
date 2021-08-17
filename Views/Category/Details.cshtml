@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Details of Category";
+}
+
+<h2>Details of '@Html.Display("CategoryName")' </h2>
+<hr />
+<div class="container">
+    <p><b>Category Name: </b>@Html.Display("CategoryName")</p>
+    @*<p><b>Time Period: </b>@Html.Display("TimePeriod")</p>*@
+    @*<p><b>Course Id: </b>@Html.Display("CourseId")</p>*@
+</div>
+<div>
+    <h1>Products List under this category</h1>
+    @foreach (var item in Model)
+            {
+                <p>@item.Name</p>
+            }
+</div>
+@*<div class="container text-right">
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+<div class="container">
+    <a class="btn btn-warning" asp-action="Index">Back To List</a>
+</div>

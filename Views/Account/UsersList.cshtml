@@ -1,0 +1,42 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ApplicationUser>
+@*<h1 class="bg-info text-white">All Users</h1>*@
+<h2 class="text-center">User List</h2>
+@*@if (User.IsInRole("Admin"))
+{*@
+    @*<a asp-action="CreateUser" class="btn btn-secondary">Create a User</a>*@
+    <a class="btn btn-warning btn-lg mb3" asp-action="CreateUser">Create New User</a>
+@*}*@
+
+<table class="table mt-3">
+    <tr>@*<th>ID</th>*@<th>Name</th><th>Email</th><th>Update</th><th>Delete</th></tr>
+
+    @foreach (ApplicationUser user in Model)
+    {
+        <tr>
+            @*<td>@user.Id</td>*@
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="UpdateUser" asp-route-id="@user.Id">
+                    Update
+                </a>
+            </td>
+            <td>
+                <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+@*<h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1>Hello @UserManager.GetUserName(User)!</h1>
+    }
+</h1>*@
