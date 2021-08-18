@@ -277,7 +277,7 @@ namespace WebShop.Controllers
         }
         public List<Products> getProducts()
         {
-            List<Products> ProductList = _context.Products.Take(10).ToList();
+            List<Products> ProductList = _context.Products.Take(12).ToList();
             return ProductList;
         }
         public List<Category> getCategorys()
