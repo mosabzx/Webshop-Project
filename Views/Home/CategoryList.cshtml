@@ -13,18 +13,24 @@
                     </div>
 
                     @*<div class="d-flex justify-content-between align-items-center mx-2">
-                            <span><strong>Color: </strong>@item.Color</span><span><strong>Available: </strong>@item.Quantity</span>
-                        </div>*@
+            <span><strong>Color: </strong>@item.Color</span><span><strong>Available: </strong>@item.Quantity</span>
+        </div>*@
                     <div class="buy mt-3">
                         <button asp-action="Privacy" class="btn btn-primary btn-block" type="button">Add To Cart</button>
                     </div>
+                   
                     <div class="d-flex justify-content-between align-items-center mx-3 mt-2">
-                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a class="btn btn-success btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                            
+                        </div>
+                    
 
-                </div>
+                    </div>
             </div>
         </div>
     }

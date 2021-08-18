@@ -138,29 +138,24 @@ namespace WebShop.Controllers
             {
                 try
                 {
-
                     //Todo: Add upload update image.
                     string newfileName, oldFileName;
                     oldFileName = item.ImageName;
 
-
                     if (item.ImageName != null)
                     {
                         string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
-
 
                         if (item.ImageFile == null)
                             newfileName = oldFileName;
                         else
                             newfileName = item.ImageFile.FileName;
 
-
                         string fullPath = Path.Combine(image, newfileName);
 
                         //Fetching the old image path.
 
                         var fullOLdPath = Path.Combine(image, oldFileName);
-
 
                         if (fullPath != fullOLdPath)
                         {
@@ -252,12 +247,13 @@ namespace WebShop.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var imageModel = await _context.Products.FindAsync(id);
-
-            //delete image from wwwroot/image
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.ImageName);
-            if (System.IO.File.Exists(imagePath))
-                System.IO.File.Delete(imagePath);
-
+            if(imageModel.ImageName != null)
+            { 
+                //delete image from wwwroot/image
+                var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.ImageName);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+            }
             //delete the record
             _context.Products.Remove(imageModel);
             await _context.SaveChangesAsync();
