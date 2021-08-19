@@ -1,0 +1,5 @@
+﻿Guid Class : Global unique identifier: 
+ string uniqFileName = Guid.NewGuid().ToString + "_" + model.property.FileName;
+
+
+

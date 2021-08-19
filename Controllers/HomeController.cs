@@ -89,14 +89,24 @@ namespace WebShop.Controllers
                 //    await item.ImageFile.CopyToAsync(fileStream);
                 //}
 
+                string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
                 string fileName = string.Empty;
+                string defaultImage = "default.jpg";
                 if (item.ImageFile != null)
                 {
-                    string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
-                    fileName = item.ImageFile.FileName;
+                    //string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
+                    fileName = $"{Guid.NewGuid().ToString()}_{item.ImageFile.FileName}";
                     string fullPath = Path.Combine(image, fileName);
-                    await item.ImageFile.CopyToAsync(new FileStream(fullPath, FileMode.Create));
-                    item.ImageName = fileName;
+                    using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await item.ImageFile.CopyToAsync(fileStream);
+                        item.ImageName = fileName;
+                    }
+
+                }
+                else
+                {
+                    item.ImageName = defaultImage;
 
                 }
 
@@ -124,7 +134,7 @@ namespace WebShop.Controllers
             }
             return View(item);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Price, ImageName, ImageFile, Quantity, Color, CategoryId")] Products item)
@@ -141,43 +151,45 @@ namespace WebShop.Controllers
 
                     //Todo: Add upload update image.
                     string newfileName, oldFileName;
+                    string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
+                    
+
+                    string defaultImage = "default.jpg";
+
+                    //Fetching the old image name.
                     oldFileName = item.ImageName;
 
 
-                    if (item.ImageName != null)
+                    if (item.ImageFile == null)
                     {
-                        string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
-
-
-                        if (item.ImageFile == null)
-                            newfileName = oldFileName;
-                        else
-                            newfileName = item.ImageFile.FileName;
-
-
+                        newfileName = oldFileName;
+                    }
+                    else if(item.ImageFile != null)
+                    {
+                        newfileName = $"{Guid.NewGuid().ToString()}_{item.ImageFile.FileName}";
                         string fullPath = Path.Combine(image, newfileName);
+                        
 
-                        //Fetching the old image path.
-
-                        var fullOLdPath = Path.Combine(image, oldFileName);
-
-
-                        if (fullPath != fullOLdPath)
+                        //Save the new file.
+                        using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
                         {
-                            //Delete the old image.
-                            System.IO.File.Delete(fullOLdPath);
-                            //Save the new file.
-                            using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                await item.ImageFile.CopyToAsync(fileStream);
-                                //item.ImageName = fileName;
-                                item.ImageName = newfileName;
-                            }
+                            await item.ImageFile.CopyToAsync(fileStream);
+                            //item.ImageName = fileName;
 
                         }
+                        item.ImageName = newfileName;
 
+                        if (item.ImageName != defaultImage && item.ImageName == oldFileName)
+                        {
+                            var fullOLdPath = Path.Combine(image, oldFileName);
+                            //Delete the old image.
+                            System.IO.File.Delete(fullOLdPath);
+                        }
+                        
 
                     }
+                    
+
                     _context.Update(item);
                     await _context.SaveChangesAsync();
                 }
@@ -252,11 +264,14 @@ namespace WebShop.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var imageModel = await _context.Products.FindAsync(id);
-
-            //delete image from wwwroot/image
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.ImageName);
-            if (System.IO.File.Exists(imagePath))
-                System.IO.File.Delete(imagePath);
+            string defaultImage = "default.jpg";
+            if (imageModel.ImageName != null && imageModel.ImageName != defaultImage)
+            {
+                //delete image from wwwroot/image
+                var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.ImageName);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+            }
 
             //delete the record
             _context.Products.Remove(imageModel);
