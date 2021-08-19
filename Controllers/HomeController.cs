@@ -150,21 +150,20 @@ namespace WebShop.Controllers
                 {
 
                     //Todo: Add upload update image.
-                    string newfileName, oldFileName;
-                    string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
+                    string newfileName;
+                    string oldFileName = string.Empty;
                     
-
+                    string image = Path.Combine(_hostEnvironment.WebRootPath, "Image");
                     string defaultImage = "default.jpg";
-
+                    string defaultPath = Path.Combine(image, defaultImage);
                     //Fetching the old image name.
                     oldFileName = item.ImageName;
 
+                    
+                    
 
-                    if (item.ImageFile == null)
-                    {
-                        newfileName = oldFileName;
-                    }
-                    else if(item.ImageFile != null)
+
+                    if (item.ImageFile != null)
                     {
                         newfileName = $"{Guid.NewGuid().ToString()}_{item.ImageFile.FileName}";
                         string fullPath = Path.Combine(image, newfileName);
@@ -174,18 +173,18 @@ namespace WebShop.Controllers
                         using (FileStream fileStream = new FileStream(fullPath, FileMode.Create))
                         {
                             await item.ImageFile.CopyToAsync(fileStream);
-                            //item.ImageName = fileName;
-
+                            
                         }
                         item.ImageName = newfileName;
+                        var fullOLdPath = Path.Combine(image, oldFileName);
 
-                        if (item.ImageName != defaultImage && item.ImageName == oldFileName)
+
+                        if (fullOLdPath != defaultPath)
                         {
-                            var fullOLdPath = Path.Combine(image, oldFileName);
+
                             //Delete the old image.
                             System.IO.File.Delete(fullOLdPath);
                         }
-                        
 
                     }
                     
