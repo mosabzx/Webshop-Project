@@ -1,0 +1,58 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+@if(ViewBag.cart == null)
+{
+   <h3>Your cart is empty.</h3>
+}
+else
+{
+    <h3>Cart List</h3>
+    <table class="table">
+        <tr>
+            <th>Option</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Photo</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            
+            <th>Sub Total</th>
+        </tr>
+        @foreach (var item in ViewBag.cart)
+        {
+    <tr>
+        <td><a asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Id">Remove</a></td>
+        <td>@item.Product.Id</td>
+        <td>@item.Product.Name</td>
+        <td><img src="@("~/image/" + item.Product.ImageName)" asp-append-version="true" width="60" /> </td>
+        <td>@item.Product.Price.ToString("0.00")</td>
+        <td>@item.Quantity</td>
+        @{
+            decimal total = (item.Product.Price * item.Quantity);
+            <td>@total.ToString("0.00")</td>
+         }
+    </tr>
+        }
+        <tr>
+            <td align="right" colspan="6"><strong>Total</strong></td>
+            <td>
+                @ViewBag.total.ToString("0.00")
+            </td>
+        </tr>
+    </table>
+    <div>
+        <a class="btn btn-primary btn-lg float-right" asp-controller="Cart" asp-action="OrderProduct">Order</a>
+    </div>
+
+    <br>
+    <a asp-controller="Home" asp-action="index">Continue Shopping</a>
+    }
+</body>
+</html>

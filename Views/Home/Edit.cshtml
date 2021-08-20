@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit '@Model.Name'</h1>
 
-<h4>ImageModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,28 +23,11 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-            @*<label asp-for="ImageName" class="control-label"></label>*@
-            <input type = "hidden" asp-for="ImageName" class="form-control" />
-            <span asp-validation-for="ImageName" class="text-danger"></span>
-        </div>
-            <!--div class="form-group">-->
-            @*<img id="img" src="~/Image/@Model.ImageFile" style="height:200px;width:200px" />*@
-            <!--<label asp-for="ImageFile" class="control-label"></label>
-        <input asp-for="ImageFile" accept="image/*" />
-
-        <span asp-validation-for="ImageFile" class="text-danger"></span>
-    </div>-->
-            @*<div class="form-group">
-            <label asp-for="ImageName" class="control-label"></label>
-            <input asp-for="ImageName" class="form-control" />
-            <span asp-validation-for="ImageName" class="text-danger"></span>
-        </div>*@
-            @*<div class="form-group">
-            <label asp-for="ImageFile" class="control-label"></label>
-            <input asp-for="ImageFile" accept="image/*" />
-            <span asp-validation-for="ImageFile" class="text-danger"></span>
-        </div>*@
-
+                @*<label asp-for="ImageName" class="control-label"></label>*@
+                <input type = "hidden" asp-for="ImageName" class="form-control" />
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"> Click to change photo</label>
                 <input asp-for="ImageFile" calss="control-form" />

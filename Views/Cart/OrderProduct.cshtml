@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@if (ViewBag.Msg != null)
+{
+    <h4 class="text-center text-danger">@ViewBag.Msg</h4>
+
+}
+else 
+{
+    <h4 class="text-center text-success">Thanks for purchasing. Your products will deliver within 5 days.</h4>
+}
+<p class="text-center">
+    <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="Index">Back To Home Page</a>
+</p>
